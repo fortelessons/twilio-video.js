@@ -1121,10 +1121,12 @@ var PeerConnectionV2 = /** @class */ (function (_super) {
      */
     PeerConnectionV2.prototype._setLocalDescription = function (description) {
         var _this = this;
+        if(description.sdp){
         description.sdp = description.sdp.replace(
             'minptime=10;useinbandfec=1',
             'stereo=1;sprop-stereo=1;ptime=10;minptime=10;maxptime=10;maxplaybackrate=48000;sprop-maxcapturerate=48000;maxaveragebitrate=320000;useinbandfec=1;opusfec=true'
         );
+    }
         if (description.type !== 'rollback' && this._shouldApplyDtx) {
             description = new this._RTCSessionDescription({
                 sdp: enableDtxForOpus(description.sdp),
